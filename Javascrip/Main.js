@@ -15,7 +15,7 @@ let submit_button = document.getElementById("submit_button");
 let start_date_display = document.getElementById("startdatedisplay");
 let end_date_display = document.getElementById("enddatedisplay");
 
-    // declaration des elements html de la partie "calcul des indicateurs"
+// declaration des elements html de la partie "calcul des indicateurs"
 let MA_extense1_input = document.getElementById("MA_extense1");  //  le champ d'input qui definit sur combien de bougie precedent on calcule la moyenne
 let MA_extense2_input = document.getElementById("MA_extense2");
 let EMA_lenght_1_input = document.getElementById("EMA_lenght_1"); //  le champ d'input qui definit sur combien de bougie precedent on calcule la moyenne exponentielle (la premiere)
@@ -50,74 +50,11 @@ let MACD_EMA_lenght = 0;
 const start_analysis = Math.max(MA_extense1,MA_extense2,EMA_lenght_1,EMA_lenght_2)+1;
 
 
-
-
 launch_button.addEventListener("click",async function(){
-
-  let result_table = [[]];
+  
+  let result_table = data_table;
   let title_table = [["Timestamp","Date","Hours","Open","High","Low","Close","Volume","Close time","Quote asset volume","Number of trades","Taker buy base asset volume","Taker buy quote asset volume","ignore"]];
 
-  compteur =0;
-  let data = [[]];
-  let URL_T = [];
-
-  console.log("go1");
-
-  let symbole_value = input_symbole_field.value ;
-  let interval_value =input_interval_field.value ;
-  let original_starttime_value = input_startTime_field.value*1000
-  let startTime_value = original_starttime_value ;
-  let endTime_value = input_endTime_field.value*1000 ;
-
-
-  let interval_en_seconde = convertinsecond(interval_value); 
-
-  let nombre_interval_total = Math.floor(((endTime_value-startTime_value)/1000)/interval_en_seconde); 
-  nombre_interval_field.innerText = (nombre_interval_total);
-  let nombre_iteration = Math.ceil(nombre_interval_total/interval_par_iteration);    // nombre de fois qu'on va faire appeler l'API
-
-  URL_T = converttoURL (startTime_value, endTime_value, interval_par_iteration, interval_en_seconde, symbole_value, interval_value);
-  start_date_display.innerText = (converttodate(original_starttime_value));
-  end_date_display.innerText = (converttodate(endTime_value));
-
-
-  let nombre_iteration_restante = nombre_iteration;
-
-  while (nombre_iteration_restante >0 ) {   // dans ce while on appelle 10 fois (ou moins) l'API par boucle et on stock les donnes recus dans "final table" tant qu'il reste des iterations de l'API a lancer.
-
-    data = await Promise.all ([Appelle_API(URL_T[compteur]),Appelle_API(URL_T[compteur + 1]),Appelle_API(URL_T[compteur + 2]),Appelle_API(URL_T[compteur + 3]),Appelle_API(URL_T[compteur + 4]),Appelle_API(URL_T[compteur + 5]),Appelle_API(URL_T[compteur + 6]),Appelle_API(URL_T[compteur + 7]),Appelle_API(URL_T[compteur + 8]),Appelle_API(URL_T[compteur + 9])]);
-
-    for (let k=0; k< Math.min(10,nombre_iteration_restante); k++) {
-  
-      for (let i = 0; i < data[k].length; i++) {
-      let ligne_table_result=[];
-  
-        for (let j=0; j<12; j++) {
-
-            if (j==0) { 
-              ligne_table_result[j] = data[k][i][j];
-              ligne_table_result[j+1] =converttodate(data[k][i][j]);       // on convertit la donne "timestamp" en une ligne jour et une ligne heure, ce qui implique de creer une colonne supplementaire dans le tableau en resultat. D'ou le j+1 dans la suite de la boucle
-              ligne_table_result[j+2] = converttohours (data[k][i][j]);
-               
-            }
-            else {
-              
-              ligne_table_result[j+2]= Math.floor(data[k][i][j]);
-            }
-          
-        }
-
-        result_table[i+(compteur+k)*500] = ligne_table_result;
-        nombre_interval_traite.innerText = (i+(compteur+k)*500);  
-      }
-
-    }
-
-    nombre_iteration_restante = nombre_iteration_restante -10
-    compteur = compteur +10;
-  }
-
-  console.log(result_table);
   // Fin de la partie recuperation de la data API
 
   // Debut de la partie calcule des indicateurs
@@ -246,13 +183,16 @@ launch_button.addEventListener("click",async function(){
 
   // Fin de la simulation de la strategy
 
+  console.log(result_table);
   // on cree puis on download le CSV
     let Table_inCVS = arrayToCsv(title_table) +"\r\n"+ arrayToCsv(result_table); // "\r\n" permet un retour a la ligne entre les deux tableaux convertit en string
-    downloadCsv(Table_inCVS,"binancedata");
+    downloadCsv(Table_inCVS,"tradesimulation");
   // Fin de la creation du CSV
 
 
   // Creation du tableau de synthese
+
+
 
    synthesis_table.push(analyze_trade (result_table));
    console.log(synthesis_table);

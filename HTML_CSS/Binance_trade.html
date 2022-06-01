@@ -2,13 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Test API V10_1</title>
+        <title>Binance_trade_V13</title>
         <link rel="stylesheet" href="../HTML_CSS/Style1.css">
     </head>
 
 
 
-    <body class = Mainpage >
+    <body class = Mainpage >/
         <H1> Test for JS in WEB </H1>
     
        <div class="pageorga"> <!--Conteneur pour la partie nav et la party content-->
@@ -20,8 +20,6 @@
 
         <Div class = oponent_pres> 
 
-            <br> <input type="submit" value = "Lancer l'ensemble" id = "launch_button">
-
             <Div class = API_input> 
 
                 <h2>Recuperer des donnees </h2>
@@ -31,6 +29,7 @@
                             <option value="15m">15m</option>
                             <option value="30m">30m</option>
                             <option value="1h">1h</option>
+                            <option value="4h">4h</option>
                             <option value="1m">1m</option>
                             <option value="3m">3m</option>
                             <option value="5m">5m</option>
@@ -42,6 +41,22 @@
                 <input type="submit" value = "Download as CSV" id = "dlcsv_button">   <br> <br>
                 Nombre d'interval : <span id  = nombre_interval> </span>    traite  <span id =interval_traite > </span>  <br> <br>
             </Div>
+
+
+            <Div class=" strategy_input">
+                <h2>Upload un CSV </h2>
+
+                <form id="upload_csv_form">
+                    <input type="file" id="csvfile" accept=".csv" />
+                    <br/>  <br>
+                    <input type="submit" value="Submit" /> 
+                    <br> <br>
+                    <div id = "result_upload"> Statut: </div> <br> <br>
+                  </form>
+
+            </Div>
+            <br> <input type="submit" value = "afficher data" id = "console_log_data">
+                 <input type="submit" value = "Lancer simulation" id = "launch_button">
 
             <Div class=" analyse_data_input">
                 <h2>Calculer les indicateurs </h2>
@@ -87,10 +102,11 @@
         </div> <!--fin de pagecontent -->      
     </div> <!--fin de pageorga -->
 
-    <script type="text/javascript" src="../Javascrip/Function_Analyse.js"> </script>    
+    <script type="text/javascript" src="../Javascrip/Function_Indicator.js"> </script>    
+    <script type="text/javascript" src="../Javascrip/Function_diverses.js"> </script>    
     <script type="text/javascript" src="../Javascrip/Function_Strategy.js"> </script>   
     <script type="text/javascript" src="../Javascrip/Simulateur.js"> </script>   
-    <script type="text/javascript" src="../Javascrip/Download API.js"> </script>     
+    <script type="text/javascript" src="../Javascrip/Function_data.js"> </script>     
     <script type="text/javascript" src="../Javascrip/Main.js"> </script>    
     </body>
-</html>
+</html>/

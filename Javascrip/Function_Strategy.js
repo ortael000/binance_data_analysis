@@ -51,18 +51,14 @@ function Strategy_MACD1 (table,start, marge_tendance, marge_MACD, stop_loss_marg
 
   // on utilise ensuite ces variables pour identifier les cas ou on veut faire un trade
       
-    if ((test_tendance == "up") && (test_MACD_T1 == "down") && (test_MACD_T0 == "up") ) {
-      console.log("on identifie un long");
+    if ((test_tendance == "up") && (test_MACD_T1 == "down") && (test_MACD_T0 == "up") ) { 
       strat_table.push([1 , ((1-stop_loss_marge/100)*table[i][6]) , ((1+gain_marge/100)*table[i][6])]);
 
     } else if ((test_tendance == "down") && (test_MACD_T1 == "up") && (test_MACD_T0 == "down") ) {
-      console.log("on identifie un short");
       strat_table.push([-1 , ((1+stop_loss_marge/100)*table[i][6]) , ((1-gain_marge/100)*table[i][6])]);
     } else {
       strat_table.push([0,0,0]);
     }
   }
-
-  console.log(strat_table);
   return strat_table;
 };

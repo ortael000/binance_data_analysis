@@ -1,5 +1,5 @@
 // https://github.com/binance/binance-spot-api-docs/blob/master/rest-api.md#public-api-endpoints
-let result_table2 = [[]];
+let data_table = [[]];
 
 // On declare les differents elements de la page HTML en tant qu'element Javascrip
 
@@ -13,19 +13,60 @@ let nombre_interval_field2 = document.getElementById("nombre_interval");
 let nombre_interval_traite2 = document.getElementById("interval_traite");
 let dlcsv_button = document.getElementById("dlcsv_button");
 
+// on declare les elements html relatif a l'upload d'un CSV deja existant
+let cvs_input = document.getElementById("csvfile");
+let csv_input_form = document.getElementById("upload_csv_form");
+let result_upload = document.getElementById("result_upload");
+
+let afficher_data_button = document.getElementById("console_log_data");
+
 // Fin de la declaration des elements de la page HTML
 
 let compteur2 =0;
 const interval_par_iteration2 = 500;
+let csv_as_string ="";
+let title_table2 = [["Timestamp","Date","Hours","Open","High","Low","Close","Volume","Close time","Quote asset volume","Number of trades","Taker buy base asset volume","Taker buy quote asset volume","ignore"]];
 
-const start_analysis2 = Math.max(MA_extense1,MA_extense2,EMA_lenght_1,EMA_lenght_2)+1;
 
+
+const reader = new FileReader(); // on definit le Filereader qu'on va utiliser ainsi que ses proprietes
+reader.onload = function (e) {
+  csv_as_string = e.target.result;
+  
+  
+}
+
+csv_input_form.addEventListener("submit",function(e){
+  e.preventDefault();
+  const input = cvs_input.files[0];
+  reader.readAsText(input); 
+  data_table = [[]];
+
+  setTimeout(function() {
+    const array = csvToArray2(csv_as_string);
+    result_upload.innerText = ("Upload termine")
+
+    for (let i=1; i< (array.length); i++) { 
+
+      data_table[i-1]= (array[i]);
+      data_table[i-1][13]= 0;
+
+    }
+
+    console.log(data_table);
+
+  }, 150);
+
+ 
+});
 
 dlcsv_button.addEventListener("click",async function(){
+
   
   compteur2 =0;
   let data = [[]];
   let URL_T = [];
+  data_table = [[]];
 
   console.log("go1");
 
@@ -70,7 +111,7 @@ dlcsv_button.addEventListener("click",async function(){
           
         }
 
-        result_table2[i+(compteur2+k)*500] = ligne_table_result;
+        data_table[i+(compteur2+k)*500] = ligne_table_result;
         nombre_interval_traite.innerText = (i+(compteur2+k)*500);  
       }
 
@@ -80,14 +121,23 @@ dlcsv_button.addEventListener("click",async function(){
     compteur2 = compteur2 +10;
   }
 
+  start_date_display.innerText = (converttodate(original_starttime_value));
+  end_date_display.innerText = (converttodate(endTime_value));
+
   console.log("on affiche la table recupere depuis l'API");
-  console.log(result_table2);
+  console.log(data_table);
 
   // on cree puis on download le CSV
-  let Table_inCVS = arrayToCsv(result_table2); // "\r\n" permet un retour a la ligne entre les deux tableaux convertit en string
-  console.log(Table_inCVS);
+  let Table_inCVS = arrayToCsv(title_table2) +"\r\n"+ arrayToCsv(data_table); // "\r\n" permet un retour a la ligne entre les deux tableaux convertit en string
   downloadCsv(Table_inCVS,"binancedata");
   // Fin de la creation du CSV
 
 });
+
+afficher_data_button.addEventListener("click",function(){
+
+  console.log(data_table);
+ 
+});
+
   
