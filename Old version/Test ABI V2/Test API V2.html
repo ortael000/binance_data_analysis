@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Test API V2</title>
+        <link rel="stylesheet" href="../Test ABI V2/Style1.css">
+    </head>
+
+
+
+    <body class = Mainpage >
+        <H1> Test for JS in WEB </H1>
+    
+       <div class="pageorga"> <!--Conteneur pour la partie nav et la party content-->
+
+        <div class = fakenav > </div>
+        
+        <nav> <!--Repertoir de navigation -->
+
+            <H2>Homepage</H2>
+            <ul>
+                <li> <a  class = repertoire href= CombatDD.html >Homepage </a> </li>
+            </ul>
+
+            <H2>Oponent_list</H2>
+                <ul>
+                    <li> <a  class = repertoire href= Gothir_list.html > Gothir </a> </li>
+                </ul> 
+            
+        </nav>
+
+        <div class = pagecontent>    <!--Conteneur pour la partie principale de la page et boite pour le conteneur pageorga-->  
+
+        <Div class = oponent_pres> 
+
+            <h2>Entrez vos parametres </h2>
+            <input type="submit" value = "submit" id = "submit_button">    <br> <br>
+
+            <Div class = API_input> 
+                Symbole <input type="text" id="input_symbole" value = "BTCUSDT"/>  <br> <br>
+                Interval <select name="input_interval" id="input_interval" value = "15m">
+
+                            <option value="1m">1m</option>
+                            <option value="3m">3m</option>
+                            <option value="5m">5m</option>
+                            <option value="15m">15m</option>
+                            <option value="30m">30m</option>
+                            <option value="1h">1h</option>
+                </select>  <br> <br>
+
+                startTime (sec) <input type="text" id="input_startTime" value = "1641034800" />  <br> <br>
+                endTime (sec) <input type="text" id="input_endTime" value = "1641294000" />  <br> <br>
+                Limit <input type="text" id="input_limit" value = "500"/>  <br> <br>
+            </Div>
+
+            <Div id = result_input1 > </Div>
+            <Div id = result_input2 > </Div>
+
+
+            
+        </div> <!--fin de pagecontent -->      
+    </div> <!--fin de pageorga -->
+
+    <script type="text/javascript" src="../Test ABI V2/Test API V2.js"> </script>    
+    </body>
+</html>
